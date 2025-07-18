@@ -1,19 +1,26 @@
 -- 14 - Maximization Room --
+-- SIZE CHALLENGE (10/10) --
 -- Grab TWO things from the INBOX. --
 -- Put only the BIGGER of the two in the OUTBOX. --
 -- If they are EQUAL, just pick either one. --
 
 main:
+
 INBOX
 COPYTO 0
+
 INBOX
-COPYTO 1
 SUB 0
-JUMPN zeroIsBigger
-COPYFROM 1
-OUTBOX
-JUMP main
-zeroIsBigger:
+
+JUMPN firstIsBigger
+
+secondIsBigger:
+ADD 0
+JUMP out
+
+firstIsBigger:
 COPYFROM 0
+
+out:
 OUTBOX
 JUMP main
