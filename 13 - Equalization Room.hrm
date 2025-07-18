@@ -1,0 +1,15 @@
+-- Get two things from the INBOX. --
+-- If they are EQUAL, put ONE of them in the INBOX. --
+-- Discard non-equal pairs. --
+
+JUMP main
+out:
+COPYFROM 0
+OUTBOX
+main:
+INBOX
+COPYTO 0
+INBOX
+SUB 0
+JUMPZ out
+JUMP main

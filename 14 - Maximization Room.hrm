@@ -1,0 +1,19 @@
+-- 14 - Maximization Room --
+-- Grab TWO things from the INBOX. --
+-- Put only the BIGGER of the two in the OUTBOX. --
+-- If they are EQUAL, just pick either one. --
+
+main:
+INBOX
+COPYTO 0
+INBOX
+COPYTO 1
+SUB 0
+JUMPN zeroIsBigger
+COPYFROM 1
+OUTBOX
+JUMP main
+zeroIsBigger:
+COPYFROM 0
+OUTBOX
+JUMP main

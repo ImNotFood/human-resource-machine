@@ -1,0 +1,5 @@
+main:
+INBOX
+JUMPZ main 
+OUTBOX
+JUMP main
