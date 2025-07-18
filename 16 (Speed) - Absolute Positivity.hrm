@@ -1,0 +1,18 @@
+-- 16 - Absolute Positivity --
+-- SPEED CHALLENGE (36/36) --
+-- Send each thing from the INBOX to the OUTBOX. --
+-- If a number is NEGATIVE, REMOVE its negative sign first. --
+
+main:
+INBOX
+
+JUMPN removeNegativeSign
+OUTBOX
+JUMP main
+
+removeNegativeSign:
+COPYTO 0
+SUB 0
+SUB 0
+OUTBOX
+JUMP main
