@@ -1,0 +1,26 @@
+-- 19 - Countdown
+-- Speed: 75/82
+-- For each number in the INBOX,
+-- Send that number to the OUTBOX,
+-- Followed by all numbers down (or up) to ZERO.
+
+main:
+INBOX
+JUMPZ zero
+COPYTO 0
+JUMPN increment
+
+decrement:
+OUTBOX
+BUMPDN 0
+JUMPZ zero
+JUMP decrement
+
+increment:
+OUTBOX
+BUMPUP 0
+JUMPN increment
+
+zero:
+OUTBOX
+JUMP main
