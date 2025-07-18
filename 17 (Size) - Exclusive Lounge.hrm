@@ -1,0 +1,31 @@
+-- 17 - Exclusive Lounge --
+-- SIZE CHALLENGE (12/12)
+-- For each TWO things in the INBOX: --
+-- If they have the SAME SIGN, send a 0 to the OUTBOX. --
+-- If they have DIFFERENT SIGNS, send a 1 to the OUTBOX. --
+
+-- Initial Floor Space: [_, _, _, _, 0, 1] --
+--                      [0, 1, 2, 3, 4, 5] --
+
+main:
+INBOX
+JUMPN firstIsNegative
+
+firstIsPositive:
+INBOX
+JUMPN differentSigns
+JUMP sameSign
+
+firstIsNegative:
+INBOX
+JUMPN sameSign
+
+differentSigns:
+COPYFROM 5
+JUMP out
+
+sameSign:
+COPYFROM 4
+out:
+OUTBOX
+JUMP main
