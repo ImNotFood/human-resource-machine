@@ -1,0 +1,9 @@
+-- 01 - Mail Room --
+-- Grab each thing from the INBOX and drop each one in the OUTBOX. --
+
+INBOX
+OUTBOX
+INBOX
+OUTBOX
+INBOX
+OUTBOX

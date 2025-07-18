@@ -1,0 +1,10 @@
+-- 03 - Copy Floor --
+-- Ignore the INBOX for now. --
+-- Grab items on the floor to spell the word B U G. --
+
+COPYFROM 4
+OUTBOX
+COPYFROM 0
+OUTBOX
+COPYFROM 3
+OUTBOX

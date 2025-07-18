@@ -1,0 +1,8 @@
+-- 02 - Busy Mail Room --
+-- SIZE CHALLENGE (3/3) --
+-- Grab each thing from the INBOX and drop each one in the OUTBOX. --
+
+main:
+INBOX
+OUTBOX
+JUMP main
