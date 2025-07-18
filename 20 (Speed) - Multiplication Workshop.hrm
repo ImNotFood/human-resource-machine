@@ -1,0 +1,66 @@
+-- 20 - Multiplication Workshop
+-- Speed: 116/109
+-- For each TWO THINGS in the INBOX,
+-- MULTIPLY them, and OUTBOX the result.
+-- Don't account for negative numbers.
+
+main:
+INBOX
+JUMPZ firstNumberIsZero
+COPYTO 0
+BUMPDN 0
+JUMPZ firstNumberIsOne
+BUMPUP 0
+
+INBOX
+JUMPZ secondNumberIsZero
+COPYTO 1
+BUMPDN 1
+JUMPZ secondNumberIsOne
+BUMPUP 1
+COPYTO 2
+
+SUB 0
+JUMPN swapNumbers
+BUMPDN 0
+JUMP loop
+
+swapNumbers:
+COPYFROM 0
+COPYTO 1
+BUMPDN 2
+COPYTO 0
+COPYFROM 1
+COPYTO 2
+
+loop:
+COPYFROM 2
+ADD 1
+COPYTO 2
+BUMPDN 0
+JUMPZ done
+JUMP loop
+
+done:
+COPYFROM 2
+OUTBOX
+JUMP main
+
+firstNumberIsZero:
+OUTBOX
+INBOX
+JUMP main
+
+secondNumberIsZero:
+OUTBOX
+JUMP main
+
+firstNumberIsOne:
+INBOX
+OUTBOX
+JUMP main
+
+secondNumberIsOne:
+COPYFROM 0
+OUTBOX
+JUMP main
