@@ -1,0 +1,25 @@
+-- 19 - Countdown --
+-- Size: 10/10
+-- For each number in the INBOX,
+-- Send that number to the OUTBOX,
+-- Followed by all numbers down (or up) to ZERO.
+
+main:
+INBOX
+COPYTO 0
+
+out:
+OUTBOX
+
+incrementOrDecrement:
+COPYFROM 0
+JUMPZ main
+JUMPN increment
+
+decrement:
+BUMPDN 0
+JUMP out
+
+increment:
+BUMPUP 0
+JUMP out
