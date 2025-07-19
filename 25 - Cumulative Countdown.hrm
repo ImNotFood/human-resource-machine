@@ -1,0 +1,30 @@
+-- 25 - Cumulative Countdown
+-- Size: 12/12
+-- Speed: 82/82
+-- For each thing in the INBOX,
+-- OUTBOX the sum of ITSELf plus all numbers down to ZERO.
+
+-- If INBOX is 3, OUTBOX should be 6 (3 + 2 + 1).
+
+-- 0: result
+-- 1: next number
+-- 5: 0
+
+main:
+INBOX
+JUMPZ zero
+COPYTO 0
+COPYTO 1
+
+loop:
+BUMPDN 1
+JUMPZ out
+ADD 0
+COPYTO 0
+JUMP loop
+
+out:
+COPYFROM 0
+zero:
+OUTBOX
+JUMP main
