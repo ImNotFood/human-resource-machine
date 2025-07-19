@@ -1,0 +1,28 @@
+-- 23 - The Littlest Number
+-- Size: 13/13
+-- Speed: 75/75
+-- For each zero-terminated string in the INBOX,
+-- send the SMALLEST number to the OUTBOX.
+
+-- There are no empty strings.
+
+main:
+INBOX
+COPYTO 0
+
+loop:
+INBOX
+JUMPZ out
+SUB 0
+JUMPN replaceWithSmallerNumber
+JUMP loop
+
+replaceWithSmallerNumber:
+ADD 0
+COPYTO 0
+JUMP loop
+
+out:
+COPYFROM 0
+OUTBOX
+JUMP main
