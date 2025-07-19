@@ -1,0 +1,37 @@
+-- 22 - Fibonacci Visitor
+-- Size Challenge: 19/19
+-- For each number from the INBOX,
+-- Send to the OUTBOX the full Fibonacci Sequence,
+-- but NOT EXCEEDING that value.
+
+-- If INBOX is 10,
+-- OUTBOX should be: 1 1 2 3 5 8
+
+-- 0: current Fibonacci value
+-- 1: next Fibonacci value
+-- 5: input (used as reference)
+-- 9: zero
+
+main:
+INBOX
+COPYTO 5
+COPYFROM 9
+COPYTO 0
+COPYTO 1
+BUMPUP 1
+
+loop:
+COPYFROM 0
+ADD 1
+COPYTO 2
+COPYFROM 1
+COPYTO 0
+COPYFROM 2
+COPYTO 1
+
+COPYFROM 5
+SUB 0
+JUMPN main
+COPYFROM 0
+OUTBOX
+JUMP loop
