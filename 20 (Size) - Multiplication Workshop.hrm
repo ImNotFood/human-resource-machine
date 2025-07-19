@@ -1,0 +1,31 @@
+-- 20 - Multiplication Workshop
+-- Size: 15/15
+-- For each TWO THINGS in the INBOX,
+-- MULTIPLY them, and OUTBOX the result.
+-- Don't account for negative numbers.
+
+-- 0: result
+-- 5: first input
+-- 6: second input (counter)
+
+main:
+INBOX
+COPYTO 0
+COPYTO 5
+INBOX
+JUMPZ out
+COPYTO 6
+
+multiply:
+BUMPDN 6
+JUMPZ grabResult
+COPYFROM 0
+ADD 5
+COPYTO 0
+JUMP multiply
+
+grabResult:
+COPYFROM 0
+out:
+OUTBOX
+JUMP main
