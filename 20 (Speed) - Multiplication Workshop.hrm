@@ -1,66 +1,56 @@
 -- 20 - Multiplication Workshop
--- Speed: 116/109
+-- Speed: 103/109
 -- For each TWO THINGS in the INBOX,
 -- MULTIPLY them, and OUTBOX the result.
 -- Don't account for negative numbers.
 
+-- 1: result
+-- 5: first input
+-- 6: second input
+-- 5 or 6: counter (based on whichever is smaller)
+
+JUMP main
+
+grabAndOut:
+COPYFROM 1
+out:
+OUTBOX
+
 main:
 INBOX
-JUMPZ firstNumberIsZero
-COPYTO 0
-BUMPDN 0
-JUMPZ firstNumberIsOne
-BUMPUP 0
-
+COPYTO 5
 INBOX
-JUMPZ secondNumberIsZero
-COPYTO 1
-BUMPDN 1
-JUMPZ secondNumberIsOne
-BUMPUP 1
-COPYTO 2
 
-SUB 0
-JUMPN swapNumbers
-BUMPDN 0
-JUMP loop
+detectZero:
+JUMPZ out
+COPYTO 6
+COPYFROM 5
+JUMPZ out
 
-swapNumbers:
-COPYFROM 0
+findMinimum:
+SUB 6
+JUMPN firstNumberIsSmaller
+
+secondNumberIsSmaller:
+COPYFROM 5
 COPYTO 1
-BUMPDN 2
-COPYTO 0
+
+multiplyBySecond:
+BUMPDN 6
+JUMPZ grabAndOut
 COPYFROM 1
-COPYTO 2
+ADD 5
+COPYTO 1
+JUMP multiplyBySecond
 
-loop:
-COPYFROM 2
-ADD 1
-COPYTO 2
-BUMPDN 0
-JUMPZ done
-JUMP loop
+firstNumberIsSmaller:
+COPYFROM 6
+COPYTO 1
 
-done:
-COPYFROM 2
-OUTBOX
-JUMP main
-
-firstNumberIsZero:
-OUTBOX
-INBOX
-JUMP main
-
-secondNumberIsZero:
-OUTBOX
-JUMP main
-
-firstNumberIsOne:
-INBOX
-OUTBOX
-JUMP main
-
-secondNumberIsOne:
-COPYFROM 0
-OUTBOX
-JUMP main
+multiplyByFirst:
+BUMPDN 5
+JUMPZ grabAndOut
+COPYFROM 1
+ADD 6
+COPYTO 1
+JUMP multiplyByFirst
