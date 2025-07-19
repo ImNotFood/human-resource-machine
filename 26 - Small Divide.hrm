@@ -1,0 +1,33 @@
+-- 26 - Small Divide
+-- Size: 15/15
+-- Speed: 74/76
+-- For each two things in the INBOX,
+-- How many times does the second fully fit into the first?
+
+-- Don't account for negative numbers, division by zero, or remainders.
+
+-- 0: counter (result)
+-- 2: first input
+-- 3: second input
+-- 9: zero
+
+main:
+INBOX
+COPYTO 2
+INBOX
+COPYTO 3
+COPYFROM 9
+COPYTO 0
+
+loop:
+COPYFROM 2
+SUB 3
+JUMPN out
+COPYTO 2
+BUMPUP 0
+JUMP loop
+
+out:
+COPYFROM 0
+OUTBOX
+JUMP main
