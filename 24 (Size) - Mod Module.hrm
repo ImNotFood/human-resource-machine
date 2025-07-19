@@ -1,0 +1,24 @@
+-- 24 - Mod Module
+-- Size Challenge: 12/12
+-- For each two things in the INBOX,
+-- send the REMAINDER of their division to the OUTBOX.
+
+-- There are no negative numbers.
+
+main:
+INBOX
+COPYTO 0
+INBOX
+COPYTO 1
+
+loop:
+COPYFROM 0
+SUB 1
+JUMPN out
+COPYTO 0
+JUMP loop
+
+out:
+ADD 1
+OUTBOX
+JUMP main
