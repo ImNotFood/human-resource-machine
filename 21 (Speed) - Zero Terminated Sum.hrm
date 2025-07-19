@@ -1,0 +1,27 @@
+-- 21 - Zero Terminated Sum
+-- Speed Challenge: 72/72
+-- The INBOX is filled with zero-terminated string.
+-- Add together the numbers in each string.
+
+-- When you reach the end of a string (marked by ZERO),
+-- put the sum in the OUTBOX.
+
+-- 5: 0
+
+main:
+INBOX
+JUMPZ emptyString
+COPYTO 0
+
+loop:
+INBOX
+JUMPZ endOfString
+ADD 0
+COPYTO 0
+JUMP loop
+
+endOfString:
+COPYFROM 0
+emptyString:
+OUTBOX
+JUMP main
