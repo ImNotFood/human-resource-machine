@@ -1,0 +1,67 @@
+-- 22 - Fibonacci Visitor
+-- Speed Challenge: 104/156
+-- For each number from the INBOX,
+-- Send to the OUTBOX the full Fibonacci Sequence,
+-- but NOT EXCEEDING that value.
+
+-- If INBOX is 10,
+-- OUTBOX should be: 1 1 2 3 5 8
+
+-- 0: Current / Next Fibonacci value (alternatively)
+-- 1: Next / Current Fibonacci value (alternatively)
+-- 5: input
+-- 8: one
+-- 9: zero
+
+createAOne:
+COPYFROM 9
+COPYTO 8
+BUMPUP 8
+
+main:
+INBOX
+COPYTO 5
+
+outputOneTwice:
+COPYFROM 8
+OUTBOX
+COPYFROM 8
+OUTBOX
+
+setupTwoAndThree:
+COPYFROM 8
+COPYTO 0
+BUMPUP 0
+COPYTO 1
+BUMPUP 1
+
+loop:
+COPYFROM 5
+SUB 0
+JUMPN main
+COPYFROM 0
+OUTBOX
+
+incrementFibonacciToTheRight:
+COPYFROM 0
+ADD 1
+COPYTO 0
+
+COPYFROM 5
+SUB 1
+JUMPN main
+COPYFROM 1
+OUTBOX
+
+incrementFibonacciToTheLeft:
+COPYFROM 1
+ADD 0
+COPYTO 1
+JUMP loop
+
+createNextFibonacciValue:
+COPYFROM 0
+ADD 1
+COPYTO 0
+
+JUMP loop
