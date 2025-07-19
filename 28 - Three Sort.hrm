@@ -1,0 +1,62 @@
+-- 28 - Three Sort
+-- Size: 45/34
+-- Speed: 89/78
+-- For each THREE THINGS in the INBOX,
+-- send them to the OUTBOX in order,
+-- from smallest to largest.
+
+main:
+INBOX
+COPYTO 5
+INBOX
+SUB 5
+JUMPN twoIsSmaller
+oneIsSmaller:
+ADD 5
+COPYTO 2
+COPYFROM 5
+COPYTO 0
+JUMP processThirdInput
+
+twoIsSmaller:
+ADD 5
+COPYTO 0
+COPYFROM 5
+COPYTO 2
+
+processThirdInput:
+INBOX
+SUB 0
+JUMPN thirdIsSmallest
+ADD 0
+SUB 2
+JUMPN thirdIsInbetween
+ADD 2
+COPYTO 3
+COPYFROM 0
+OUTBOX
+COPYFROM 2
+OUTBOX
+COPYFROM 3
+OUTBOX
+JUMP main
+
+thirdIsSmallest:
+ADD 0
+OUTBOX
+COPYFROM 0
+OUTBOX
+COPYFROM 2
+OUTBOX
+JUMP main
+
+thirdIsInbetween:
+ADD 2
+COPYTO 1
+COPYFROM 0
+OUTBOX
+COPYFROM 1
+OUTBOX
+COPYFROM 2
+OUTBOX
+JUMP main
