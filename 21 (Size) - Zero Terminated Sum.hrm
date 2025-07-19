@@ -1,0 +1,25 @@
+-- 21 - Zero Terminated Sum
+-- Size Challenge: 10/10
+-- The INBOX is filled with zero-terminated string.
+-- Add together the numbers in each string.
+
+-- When you reach the end of a string (marked by ZERO),
+-- put the sum in the OUTBOX.
+
+-- 5: 0
+
+main:
+COPYFROM 5
+COPYTO 0
+
+loop:
+INBOX
+JUMPZ out
+ADD 0
+COPYTO 0
+JUMP loop
+
+out:
+COPYFROM 0
+OUTBOX
+JUMP main
