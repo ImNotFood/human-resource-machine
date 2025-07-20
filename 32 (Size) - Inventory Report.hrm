@@ -1,0 +1,38 @@
+-- 32 - Inventory Report
+-- Size Challenge: 16/16
+-- For each thing in the INBOX,
+-- send to the OUTBOX,
+-- the total number of matching items on the FLOOR.
+
+-- [0-13]: letters
+--   [14]: zero
+--   [15]: current letter
+--   [16]: result
+--   [19]: counter (current memory position)
+
+main:
+INBOX
+COPYTO 15
+
+initializeCounters:
+COPYFROM 14
+COPYTO 16
+COPYTO 19
+
+loop:
+COPYFROM [19]
+JUMPZ out
+SUB 15
+JUMPZ incrementResult
+incrementCounter:
+BUMPUP 19
+JUMP loop
+
+incrementResult:
+BUMPUP 16
+JUMP incrementCounter
+
+out:
+COPYFROM 16
+OUTBOX
+JUMP main
