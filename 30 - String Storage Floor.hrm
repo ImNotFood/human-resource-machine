@@ -1,0 +1,22 @@
+-- 30 - String Storage Floor
+-- Size: 7/7
+-- Speed: 203/203
+-- Each thing in the INBOX is an address of a tile on the floor.
+-- For each address provided in the INBOX,
+-- OUTBOX the requested item from the floor,
+-- and ALL FOLLOWING items on the floor until you reach a zero.
+
+-- (There are letters and zeroes on the floor)
+-- (They will spell something out)
+-- (This game has a story)
+
+main:
+INBOX
+COPYTO 24
+
+loop:
+COPYFROM [24]
+JUMPZ main
+OUTBOX
+BUMPUP 24
+JUMP loop
