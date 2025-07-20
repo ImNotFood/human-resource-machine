@@ -1,0 +1,54 @@
+-- 28 - Three Sort
+-- Size Challenge: 33/34
+-- For each THREE THINGS in the INBOX,
+-- send them to the OUTBOX in order,
+-- from smallest to largest.
+
+-- 0: smallest of two
+-- 1: highest of two
+-- 2: third input
+-- 5: first input (temporary)
+-- 6: second input (temporary)
+
+main:
+INBOX
+COPYTO 0
+INBOX
+COPYTO 1
+INBOX
+COPYTO 2
+
+loop:
+COPYFROM 2
+SUB 1
+JUMPN swapTwoWithOne
+COPYFROM 1
+SUB 0
+JUMPN swapOneWithZero
+
+out:
+COPYFROM 0
+OUTBOX
+COPYFROM 1
+OUTBOX
+COPYFROM 2
+OUTBOX
+JUMP main
+
+swapOneWithZero:
+COPYFROM 0
+COPYTO 4
+COPYFROM 1
+COPYTO 0
+COPYFROM 4
+COPYTO 1
+JUMP loop
+
+swapTwoWithOne:
+COPYFROM 1
+COPYTO 4
+COPYFROM 2
+COPYTO 1
+COPYFROM 4
+COPYTO 2
+JUMP loop
