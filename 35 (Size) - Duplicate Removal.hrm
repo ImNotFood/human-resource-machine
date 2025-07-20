@@ -1,0 +1,31 @@
+-- 35 - Duplicate Removal
+-- Size Challenge: 16/17
+-- Send everything from the INBOX to the OUTBOX,
+-- except values that have already been outputted.
+
+-- [0-11]: letters
+--   [12]: current letter
+--   [13]: counter
+--   [14]: counter reset value
+
+main:
+INBOX
+COPYTO 12
+COPYFROM 14
+COPYTO 13
+BUMPDN 13
+
+loop:
+JUMPN out
+COPYFROM [13]
+SUB 12
+JUMPZ main
+BUMPDN 13
+JUMP loop
+
+out:
+COPYFROM 12
+COPYTO [14]
+OUTBOX
+BUMPUP 14
+JUMP main
