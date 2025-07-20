@@ -1,0 +1,18 @@
+-- 29 - Storage Floor
+-- Size: 5/5
+-- Speed: 25/25
+-- Imagine each thing in the INBOX is an address.
+-- Each address refers to a 0-9 tile on the floor.
+-- For each address in the INBOX,
+-- pick up the letter at that address and OUTBOX it.
+
+-- Oh my god I can finally access memory slots by using variables.
+-- I don't have to hardcode them anymore.
+-- Never have I felt so much joy.
+
+main:
+INBOX
+COPYTO 12
+COPYFROM [12]
+OUTBOX
+JUMP main
