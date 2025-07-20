@@ -1,0 +1,61 @@
+-- 35 - Duplicate Removal
+-- Speed Challenge: 154/167
+-- Send everything from the INBOX to the OUTBOX,
+-- except values that have already been outputted.
+
+-- [0-11]: letters
+--   [12]: current letter
+--   [13]: counter
+--   [14]: counter reset value
+
+-- I got lazy so I just manually handled the first few cases to remove a bunch of steps.
+
+init:
+INBOX
+COPYTO 0
+OUTBOX
+BUMPUP 14
+
+init2:
+INBOX
+COPYTO 12
+SUB 0
+JUMPZ init2
+COPYFROM 12
+COPYTO 1
+OUTBOX
+BUMPUP 14
+
+init3:
+INBOX
+COPYTO 12
+SUB 0
+JUMPZ init3
+COPYFROM 12
+SUB 1
+JUMPZ init3
+COPYFROM 12
+COPYTO 2
+OUTBOX
+BUMPUP 14
+
+main:
+INBOX
+COPYTO 12
+COPYFROM 14
+COPYTO 13
+
+loop:
+BUMPDN 13
+JUMPN out
+COPYFROM [13]
+SUB 12
+JUMPZ main
+JUMP loop
+
+out:
+COPYFROM 12
+COPYTO [14]
+OUTBOX
+BUMPUP 14
+JUMP main
