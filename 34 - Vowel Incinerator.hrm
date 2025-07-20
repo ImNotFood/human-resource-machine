@@ -1,0 +1,29 @@
+-- 34 - Vowel Incinerator
+-- Size: 13/13
+-- Speed: 323/323
+-- Send everything from the INBOX to the OUTBOX,
+-- except for vowels.
+
+-- [0-4]: vowels
+--   [5]: zero
+--   [8]: current letter
+--   [9]: counter
+
+main:
+COPYFROM 5
+COPYTO 9
+INBOX
+COPYTO 8
+
+loop:
+COPYFROM [9]
+JUMPZ outputConsonant
+SUB 8
+JUMPZ main
+BUMPUP 9
+JUMP loop
+
+outputConsonant:
+COPYFROM 8
+OUTBOX
+JUMP main
