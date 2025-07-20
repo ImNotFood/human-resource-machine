@@ -1,0 +1,20 @@
+-- 31 - String Reverse
+-- Size: 11/11
+-- Speed: 118/122
+-- For each zero terminated string in the INBOX,
+-- reverse it and put the result in the OUTBOX.
+
+main:
+INBOX
+JUMPZ out
+COPYTO [14]
+BUMPUP 14
+JUMP main
+
+out:
+BUMPDN 14
+COPYFROM [14]
+OUTBOX
+COPYFROM 14
+JUMPZ main
+JUMP out
