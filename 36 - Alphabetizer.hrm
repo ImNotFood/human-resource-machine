@@ -1,0 +1,66 @@
+-- 36 - Alphabetizer
+-- The INBOX contains exactly two words.
+-- Determine which word comes first,
+-- if you were to order them alphabetically.
+-- Send only that word to the OUTBOX.
+
+-- [20]: first word current index
+-- [21]: second word current index
+-- [22]: second word starting index
+-- [23]: zero
+-- [24]: output current index
+
+main:
+COPYFROM 23
+COPYTO 21
+BUMPUP 23
+
+storeWord:
+INBOX
+COPYTO [21]
+JUMPZ wordIsStored
+BUMPUP 21
+JUMP storeWord
+
+wordIsStored:
+COPYFROM 23
+JUMPZ setupCounters
+BUMPUP 21
+COPYFROM 21
+COPYTO 22
+BUMPDN 23
+JUMP storeWord
+
+setupCounters:
+COPYFROM 23
+COPYTO 20
+COPYFROM 22
+COPYTO 21
+
+compareAlphabetically:
+COPYFROM [20]
+SUB [21]
+JUMPZ compareNextLetter
+JUMPN outputFirstWord
+JUMP outputSecondWord
+
+compareNextLetter:
+BUMPUP 20
+BUMPUP 21
+JUMP compareAlphabetically
+
+outputFirstWord:
+COPYFROM 23
+COPYTO 24
+JUMP outputWord
+
+outputSecondWord:
+COPYFROM 22
+COPYTO 24
+
+outputWord:
+COPYFROM [24]
+JUMPZ main
+OUTBOX
+BUMPUP 24
+JUMP outputWord
