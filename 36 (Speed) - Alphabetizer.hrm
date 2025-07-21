@@ -1,0 +1,75 @@
+-- 36 - Alphabetizer
+-- Speed Challenge: 82/109
+-- The INBOX contains exactly two words.
+-- Determine which word comes first,
+-- if you were to order them alphabetically.
+-- Send only that word to the OUTBOX.
+
+-- [20]: second word final letter
+-- [23]: storage / comparison counter
+-- [24]: output counter
+
+init:
+COPYFROM 23
+COPYTO 24
+
+main:
+INBOX
+COPYTO [23]
+JUMPZ compareWords
+BUMPUP 23
+JUMP main
+
+compareWords:
+COPYFROM 24
+COPYTO 23
+
+loop:
+COPYFROM [23]
+JUMPZ outputFirstWord
+INBOX
+COPYTO 20
+JUMPZ outputSecondWord
+SUB [23]
+JUMPZ nextIteration
+JUMPN outputSecondWordFromInbox
+JUMP outputFirstWord
+
+nextIteration:
+BUMPUP 23
+JUMP loop
+
+outputFirstWord:
+COPYFROM [24]
+JUMPZ done
+OUTBOX
+BUMPUP 24
+JUMP outputFirstWord
+
+outputSecondWord:
+COPYFROM [24]
+OUTBOX
+BUMPUP 24
+SUB 23
+JUMPZ done
+JUMP outputSecondWord
+
+outputSecondWordFromInbox:
+COPYFROM 20
+COPYTO [23]
+
+output:
+COPYFROM [24]
+OUTBOX
+BUMPUP 24
+SUB 23
+JUMPN outputSecondWordFromInbox
+JUMPZ outputSecondWordFromInbox
+
+outputInbox:
+INBOX
+JUMPZ done
+OUTBOX
+JUMP outputInbox
+
+done:
