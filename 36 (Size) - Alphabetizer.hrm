@@ -1,4 +1,5 @@
 -- 36 - Alphabetizer
+-- Size Challenge: 39/39
 -- The INBOX contains exactly two words.
 -- Determine which word comes first,
 -- if you were to order them alphabetically.
@@ -7,7 +8,7 @@
 -- [20]: first word current index
 -- [21]: second word current index
 -- [22]: second word starting index
--- [23]: zero
+-- [23]: zero (also temporarily a boolean)
 -- [24]: output current index
 
 main:
@@ -18,44 +19,42 @@ BUMPUP 23
 storeWord:
 INBOX
 COPYTO [21]
-JUMPZ wordIsStored
+JUMPZ wordIsFinished
 BUMPUP 21
 JUMP storeWord
 
-wordIsStored:
+wordIsFinished:
 COPYFROM 23
-JUMPZ setupCounters
+JUMPZ compareWords
 BUMPUP 21
-COPYFROM 21
 COPYTO 22
 BUMPDN 23
 JUMP storeWord
 
-setupCounters:
-COPYFROM 23
-COPYTO 20
+compareWords:
 COPYFROM 22
 COPYTO 21
+COPYFROM 23
+COPYTO 20
 
-compareAlphabetically:
+loop:
+COPYFROM [20]
+JUMPZ outputFirstWord
+COPYFROM [21]
+JUMPZ outputSecondWord
+
 COPYFROM [20]
 SUB [21]
-JUMPZ compareNextLetter
+JUMPZ nextIteration
 JUMPN outputFirstWord
-JUMP outputSecondWord
-
-compareNextLetter:
-BUMPUP 20
-BUMPUP 21
-JUMP compareAlphabetically
-
-outputFirstWord:
-COPYFROM 23
-COPYTO 24
-JUMP outputWord
 
 outputSecondWord:
 COPYFROM 22
+COPYTO 24
+JUMP outputWord
+
+outputFirstWord:
+COPYFROM 23
 COPYTO 24
 
 outputWord:
@@ -64,3 +63,8 @@ JUMPZ main
 OUTBOX
 BUMPUP 24
 JUMP outputWord
+
+nextIteration:
+BUMPUP 20
+BUMPUP 21
+JUMP loop
