@@ -1,5 +1,6 @@
 -- 38 - Digit Exploder
--- Size Challenge: 39/30
+-- Size Challenge: 34/30
+-- Speed: 429
 -- Grab each number from the INBOX,
 -- send its digits to the OUTBOX.
 -- 123 becomes 1, 2, 3.
@@ -13,7 +14,6 @@
 --  4: shouldOutput (0 when hundreds/tens are "0", 1 otherwise)
 --  5: 0
 --  6: counter (2 -> 0)
---  7: current result address (0, 1, 2)
 --  8: current unit address (9, 10, 11)
 --  9: 1 (starts as 0)
 -- 10: 10
@@ -31,8 +31,8 @@ COPYFROM 5
 COPYTO 0
 COPYTO 1
 COPYTO 2
+COPYTO 4
 COPYTO 6
-COPYTO 7
 BUMPUP 6
 BUMPUP 6
 COPYFROM 10
@@ -44,30 +44,23 @@ COPYFROM 3
 SUB [8]
 JUMPN next
 COPYTO 3
-BUMPUP [7]
+BUMPUP [6]
 JUMP loop
 
 next:
-COPYFROM 6
-JUMPZ done
+COPYFROM [6]
+JUMPZ checkIfShouldOutput
+doOutput:
+OUTBOX
+BUMPUP 4
+skipOutput:
 BUMPDN 6
-BUMPUP 7
+JUMPN main
 BUMPDN 8
 JUMP loop
 
-done:
-COPYFROM 0
-JUMPZ checkTens
-OUTBOX
-COPYFROM 1
-outputTens:
-OUTBOX
-outputUnits:
-COPYFROM 2
-OUTBOX
-JUMP main
-
-checkTens:
-COPYFROM 1
-JUMPZ outputUnits
-JUMP outputTens
+checkIfShouldOutput:
+COPYFROM 4
+JUMPZ skipOutput
+COPYFROM [6]
+JUMP doOutput
