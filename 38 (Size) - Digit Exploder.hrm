@@ -1,14 +1,11 @@
 -- 38 - Digit Exploder
--- Size Challenge: 34/30
--- Speed: 429
+-- Size Challenge: 33/30
+-- Speed: 449
 -- Grab each number from the INBOX,
 -- send its digits to the OUTBOX.
 -- 123 becomes 1, 2, 3.
 
---  0: result units (in 123 it's 3)
---  1: result tens (in 123 it's 2)
---  2: result hundreds (in 123 it's 1)
-
+--  0: current result
 --  3: current number
 
 --  4: shouldOutput (0 when hundreds/tens are "0", 1 otherwise)
@@ -25,12 +22,7 @@ COPYTO 5
 BUMPUP 9
 
 main:
-INBOX
-COPYTO 3
 COPYFROM 5
-COPYTO 0
-COPYTO 1
-COPYTO 2
 COPYTO 4
 COPYTO 6
 BUMPUP 6
@@ -38,17 +30,23 @@ BUMPUP 6
 COPYFROM 10
 COPYTO 8
 BUMPUP 8
+INBOX
+COPYTO 3
+
+prepareIteration:
+COPYFROM 5
+COPYTO 0
 
 loop:
 COPYFROM 3
 SUB [8]
 JUMPN next
 COPYTO 3
-BUMPUP [6]
+BUMPUP 0
 JUMP loop
 
 next:
-COPYFROM [6]
+COPYFROM 0
 JUMPZ checkIfShouldOutput
 doOutput:
 OUTBOX
@@ -57,10 +55,10 @@ skipOutput:
 BUMPDN 6
 JUMPN main
 BUMPDN 8
-JUMP loop
+JUMP prepareIteration
 
 checkIfShouldOutput:
 COPYFROM 4
 JUMPZ skipOutput
-COPYFROM [6]
+COPYFROM 0
 JUMP doOutput
