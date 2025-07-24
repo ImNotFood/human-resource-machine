@@ -1,0 +1,27 @@
+-- 37 - Scavenger Chain
+-- Size: 8/8
+-- Speed: 63/63
+-- Each pair on the floor contains:
+--   1. Data
+--   2. The address of another one of the pair
+--
+-- Each thing in the INBOX is an address of one of the pairs.
+-- For each address in the INBOX,
+-- OUTBOX the data for that pair and for each following pair in the chain.
+-- The chain ends when a negative number has been reached.  
+
+--   [N]: data
+-- [N+1]: address to another piece of data
+--    22: the current address to fetch
+
+main:
+INBOX
+
+loop:
+COPYTO 22
+COPYFROM [22]
+OUTBOX
+BUMPUP 22
+COPYFROM [22]
+JUMPN main
+JUMP loop
