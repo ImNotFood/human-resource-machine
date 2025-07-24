@@ -1,0 +1,66 @@
+-- 38 - Digit Exploder
+-- Size: 37/30
+-- Speed: 355/165 (haha)
+-- Grab each number from the INBOX,
+-- send its digits to the OUTBOX.
+-- 123 becomes 1, 2, 3.
+
+--  0: units
+--  1: tens
+--  2: hundreds
+--  3: current number
+--  8: 1
+--  9: 0
+-- 10: 10
+-- 11: 100
+
+main:
+COPYFROM 9
+COPYTO 0
+COPYTO 1
+COPYTO 2
+COPYTO 8
+BUMPUP 8
+INBOX
+COPYTO 3
+
+hundreds:
+COPYFROM 3
+SUB 11
+JUMPN tens
+COPYTO 3
+BUMPUP 2
+JUMP hundreds
+
+tens:
+COPYFROM 3
+SUB 10
+JUMPN units
+COPYTO 3
+BUMPUP 1
+JUMP tens
+
+units:
+COPYFROM 3
+SUB 8
+JUMPN output
+COPYTO 3
+BUMPUP 0
+JUMP units
+
+output:
+COPYFROM 2
+JUMPZ skipHundreds
+OUTBOX
+outputTens:
+COPYFROM 1
+OUTBOX
+skipTens:
+COPYFROM 0
+OUTBOX
+JUMP main
+
+skipHundreds:
+COPYFROM 1
+JUMPZ skipTens
+JUMP outputTens
