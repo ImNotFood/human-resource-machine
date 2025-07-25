@@ -1,6 +1,6 @@
 -- 38 - Digit Exploder
--- Size Challenge: 31/30
--- Speed: 449
+-- Size Challenge: 29/30
+-- Speed: 458 (the speed challenge asks for 165 lol)
 -- Grab each number from the INBOX,
 -- send its digits to the OUTBOX.
 -- 123 becomes 1, 2, 3.
@@ -43,8 +43,10 @@ JUMP loop
 
 next:
 COPYFROM 0
-JUMPZ checkIfShouldOutput
+ADD 4
+JUMPZ skipOutput
 doOutput:
+SUB 4
 OUTBOX
 BUMPUP 4
 skipOutput:
@@ -53,9 +55,3 @@ SUB 9
 JUMPZ main
 BUMPDN 8
 JUMP prepareIteration
-
-checkIfShouldOutput:
-COPYFROM 4
-JUMPZ skipOutput
-COPYFROM 0
-JUMP doOutput
