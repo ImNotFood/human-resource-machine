@@ -1,5 +1,5 @@
 -- 38 - Digit Exploder
--- Speed Challenge: 168/165
+-- Speed Challenge: 206/165
 -- Grab each number from the INBOX,
 -- send its digits to the OUTBOX.
 -- 123 becomes 1, 2, 3.
@@ -7,131 +7,65 @@
 --  0: current result
 --  3: current number
 
---  5: 2
---  9: 1
+--  9: 0
 -- 10: 10
 -- 11: 100
 
-main:
-INBOX
-SUB 11
-
-init:
-BUMPUP 9
-COPYTO 5
-BUMPUP 5
 JUMP main
 
-NNxOutput:
+out10:
 COPYFROM 0
 OUTBOX
 COPYFROM 3
 OUTBOX
 
 main:
+COPYFROM 9
+COPYTO 0
+
 INBOX
 COPYTO 3
 
-test0xx:
+loop100:
 SUB 11
-JUMPN Oxx
-testIxx:
-SUB 11
-JUMPN Ixx
-
-Nxx:
-COPYTO 3
-COPYFROM 5
-COPYTO 0
-
-NxxLoop:
-COPYFROM 3
-SUB 11
-JUMPN NxxOutput
+JUMPN out100
 COPYTO 3
 BUMPUP 0
-JUMP NxxLoop
+COPYFROM 3
+JUMP loop100
 
-NxxOutput:
+out100:
 COPYFROM 0
+JUMPZ skip100
 OUTBOX
-
-testN0x:
-IxxResume:
-COPYFROM 3
-SUB 10
-JUMPN N0x
-testN1x:
-SUB 10
-JUMPN N1x
-
-NNx:
-COPYTO 3
-COPYFROM 5
+COPYFROM 9
 COPYTO 0
-NNxLoop:
 COPYFROM 3
+
+loop10:
 SUB 10
-JUMPN NNxOutput
+JUMPN out10
 COPYTO 3
 BUMPUP 0
-JUMP NNxLoop
-
-Oxx:
 COPYFROM 3
-test00x:
-SUB 10
-JUMPN O0x
-test01x:
-SUB 10
-JUMPN O1x
+JUMP loop10
 
-ONx:
-COPYTO 3
-COPYFROM 5
-COPYTO 0
-ONxLoop:
+skip100:
 COPYFROM 3
+
+skip100loop10:
 SUB 10
-JUMPN NNxOutput
+JUMPN skip100out10
 COPYTO 3
 BUMPUP 0
-JUMP ONxLoop
-
-Ixx:
-ADD 11
-COPYTO 3
-COPYFROM 9
-OUTBOX
-JUMP IxxResume
-
-N0x:
-COPYFROM 9
-SUB 9
-OUTBOX
 COPYFROM 3
-OUTBOX
-JUMP main
+JUMP skip100loop10
 
-N1x:
-ADD 10
-COPYTO 3
-COPYFROM 9
+skip100out10:
+COPYFROM 0
+JUMPZ skip10
 OUTBOX
-COPYFROM 3
-OUTBOX
-JUMP main
-
-O0x:
-COPYFROM 3
-OUTBOX
-JUMP main
-
-O1x:
-ADD 10
-COPYTO 3
-COPYFROM 9
-OUTBOX
+skip10:
 COPYFROM 3
 OUTBOX
 JUMP main
