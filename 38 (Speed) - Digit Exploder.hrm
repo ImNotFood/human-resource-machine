@@ -1,0 +1,137 @@
+-- 38 - Digit Exploder
+-- Speed Challenge: 168/165
+-- Grab each number from the INBOX,
+-- send its digits to the OUTBOX.
+-- 123 becomes 1, 2, 3.
+
+--  0: current result
+--  3: current number
+
+--  5: 2
+--  9: 1
+-- 10: 10
+-- 11: 100
+
+main:
+INBOX
+SUB 11
+
+init:
+BUMPUP 9
+COPYTO 5
+BUMPUP 5
+JUMP main
+
+NNxOutput:
+COPYFROM 0
+OUTBOX
+COPYFROM 3
+OUTBOX
+
+main:
+INBOX
+COPYTO 3
+
+test0xx:
+SUB 11
+JUMPN Oxx
+testIxx:
+SUB 11
+JUMPN Ixx
+
+Nxx:
+COPYTO 3
+COPYFROM 5
+COPYTO 0
+
+NxxLoop:
+COPYFROM 3
+SUB 11
+JUMPN NxxOutput
+COPYTO 3
+BUMPUP 0
+JUMP NxxLoop
+
+NxxOutput:
+COPYFROM 0
+OUTBOX
+
+testN0x:
+IxxResume:
+COPYFROM 3
+SUB 10
+JUMPN N0x
+testN1x:
+SUB 10
+JUMPN N1x
+
+NNx:
+COPYTO 3
+COPYFROM 5
+COPYTO 0
+NNxLoop:
+COPYFROM 3
+SUB 10
+JUMPN NNxOutput
+COPYTO 3
+BUMPUP 0
+JUMP NNxLoop
+
+Oxx:
+COPYFROM 3
+test00x:
+SUB 10
+JUMPN O0x
+test01x:
+SUB 10
+JUMPN O1x
+
+ONx:
+COPYTO 3
+COPYFROM 5
+COPYTO 0
+ONxLoop:
+COPYFROM 3
+SUB 10
+JUMPN NNxOutput
+COPYTO 3
+BUMPUP 0
+JUMP ONxLoop
+
+Ixx:
+ADD 11
+COPYTO 3
+COPYFROM 9
+OUTBOX
+JUMP IxxResume
+
+N0x:
+COPYFROM 9
+SUB 9
+OUTBOX
+COPYFROM 3
+OUTBOX
+JUMP main
+
+N1x:
+ADD 10
+COPYTO 3
+COPYFROM 9
+OUTBOX
+COPYFROM 3
+OUTBOX
+JUMP main
+
+O0x:
+COPYFROM 3
+OUTBOX
+JUMP main
+
+O1x:
+ADD 10
+COPYTO 3
+COPYFROM 9
+OUTBOX
+COPYFROM 3
+OUTBOX
+JUMP main
