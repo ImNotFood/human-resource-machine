@@ -1,5 +1,5 @@
 -- 38 - Digit Exploder
--- Speed Challenge: 187/165
+-- Speed Challenge: 161/165
 -- Grab each number from the INBOX,
 -- send its digits to the OUTBOX.
 -- 123 becomes 1, 2, 3.
@@ -14,6 +14,11 @@
 JUMP main
 
 out10:
+ADD 10
+JUMPN yep2
+COPYTO 3
+BUMPUP 0
+yep2:
 COPYFROM 0
 OUTBOX
 COPYFROM 3
@@ -33,13 +38,20 @@ COPYFROM 3
 
 loop100:
 SUB 11
+SUB 11
 JUMPN out100
 COPYTO 3
+BUMPUP 0
 BUMPUP 0
 COPYFROM 3
 JUMP loop100
 
 out100:
+ADD 11
+JUMPN yep
+COPYTO 3
+BUMPUP 0
+yep:
 COPYFROM 0
 OUTBOX
 COPYFROM 3
@@ -54,8 +66,10 @@ COPYFROM 3
 
 loop10:
 SUB 10
+SUB 10
 JUMPN out10
 COPYTO 3
+BUMPUP 0
 BUMPUP 0
 COPYFROM 3
 JUMP loop10
@@ -73,13 +87,20 @@ COPYFROM 3
 
 skip100loop10:
 SUB 10
+SUB 10
 JUMPN skip100out10
 COPYTO 3
+BUMPUP 0
 BUMPUP 0
 COPYFROM 3
 JUMP skip100loop10
 
 skip100out10:
+ADD 10
+JUMPN yep3
+COPYTO 3
+BUMPUP 0
+yep3:
 COPYFROM 0
 OUTBOX
 skip10:
