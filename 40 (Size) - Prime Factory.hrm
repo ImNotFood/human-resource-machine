@@ -1,5 +1,5 @@
 -- 40 - Prime Factory
--- Size Challenge: 32/28
+-- Size Challenge: 28/28
 -- For each thing in the INBOX,
 -- send its PRIME FACTORS to the OUTBOX,
 -- in order from smallest to largest.
@@ -16,42 +16,34 @@ COPYTO 23
 BUMPUP 23
 BUMPUP 23
 INBOX
-COPYTO 22
 
 testIfDone:
+COPYTO 20
+COPYTO 22
 SUB 23
 JUMPZ outLastNumber
+COPYFROM 24
+COPYTO 21
+
 
 loop:
+BUMPUP 21
+COPYFROM 22
 SUB 23
 JUMPN nextPrimeNumber
 JUMPZ repeatPrimeNumber
+COPYTO 22
 JUMP loop
 
 nextPrimeNumber:
 BUMPUP 23
-COPYFROM 22
+COPYFROM 20
 JUMP testIfDone
 
 repeatPrimeNumber:
 COPYFROM 23
 OUTBOX
-COPYFROM 24
-COPYTO 21
-BUMPUP 21
-COPYFROM 22
-
-division:
-SUB 23
-JUMPZ divisionDone
-COPYTO 22
-BUMPUP 21
-COPYFROM 22
-JUMP division
-
-divisionDone:
 COPYFROM 21
-COPYTO 22
 JUMP testIfDone
 
 outLastNumber:
