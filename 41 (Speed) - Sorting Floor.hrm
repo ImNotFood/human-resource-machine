@@ -1,71 +1,120 @@
 -- 41 - Sorting Floor
--- Speed Challenge: 1093/714
+-- Speed Challenge: 702/714
 -- For each zero terminated string in the INBOX,
 -- SORT the content of the string,
 -- smallest first, biggest last.
 -- Put the result in the OUTBOX.
 
--- 19: word last index
--- 20: starting point (when it reaches -1, the array is sorted)
--- 21: current address (when it reaches -1, decrement 20 and restart sort)
--- 22: next address
--- 23: lower bound (0 -> length, incremented after each sort cycle)
+-- Yes I am ashamed of this solution.
+-- But now I've finished the game (^:
+
+init:
+COPYFROM 24
+COPYTO 22
+BUMPUP 22
+COPYTO 23
+BUMPUP 23
+JUMP main
+
+outFirstInput:
+COPYFROM 0
+OUTBOX
 
 main:
-COPYFROM 24
-COPYTO 19
-
-input:
+firstInput:
 INBOX
-JUMPZ initSort
-COPYTO [19]
-BUMPUP 19
-JUMP input
+COPYTO 0
+INBOX
+JUMPZ outFirstInput
+COPYTO 1
+SUB 0
+JUMPN swap
+JUMP resume
+swap:
+COPYFROM 1
+COPYTO 16
+COPYFROM 0
+COPYTO 1
+COPYFROM 16
+COPYTO 0
 
-initSort:
-COPYFROM 24
-COPYTO 23
-BUMPDN 23
-BUMPDN 19
-
-prepareSort:
-BUMPUP 23
-COPYFROM 19
-SUB 23
-JUMPZ out
-COPYFROM 19
-COPYTO 20
-COPYTO 22
-BUMPDN 20
+resume:
+COPYFROM 22
 COPYTO 21
 
-sort:
-SUB 23
-JUMPN prepareSort
-COPYFROM [21]
-SUB [22]
-JUMPN continue
-swapLetters:
-COPYFROM [21]
-COPYTO 15
-COPYFROM [22]
+heldLetterIsAtTheEnd:
+BUMPUP 21
+
+nextInput:
+INBOX
+JUMPZ out
 COPYTO [21]
-COPYFROM 15
-COPYTO [22]
+COPYFROM 24
+COPYTO 20
+
+testLetter:
+SUB 21
+JUMPZ heldLetterIsAtTheEnd
+COPYFROM [20]
+SUB [21]
+JUMPN continue
+
+heldLetterIsSmaller:
+COPYFROM [20]
+COPYTO 16
+COPYFROM [21]
+COPYTO [20]
+COPYFROM 16
+COPYTO [21]
+BUMPUP 20
+SUB 21
+JUMPZ heldLetterIsAtTheEnd
+JUMP heldLetterIsSmaller
+
 continue:
-BUMPDN 22
-BUMPDN 21
-JUMP sort
+BUMPUP 20
+JUMP testLetter
 
 out:
-COPYFROM 24
-COPYTO 21
-
-outLoop:
-COPYFROM [21]
+COPYTO [21]
+COPYFROM 0
 OUTBOX
-BUMPUP 21
-COPYFROM 19
-SUB 21
-JUMPN main
-JUMP outLoop
+COPYFROM 1
+OUTBOX
+COPYFROM 2
+JUMPZ main
+OUTBOX
+COPYFROM 3
+JUMPZ main
+OUTBOX
+COPYFROM 4
+JUMPZ main
+OUTBOX
+COPYFROM 5
+JUMPZ main
+OUTBOX
+COPYFROM 6
+JUMPZ main
+OUTBOX
+COPYFROM 7
+JUMPZ main
+OUTBOX
+COPYFROM 8
+JUMPZ main
+OUTBOX
+COPYFROM 9
+JUMPZ main
+OUTBOX
+COPYFROM 10
+JUMPZ main
+OUTBOX
+COPYFROM 11
+JUMPZ main
+OUTBOX
+COPYFROM 12
+JUMPZ main
+OUTBOX
+COPYFROM 13
+JUMPZ main
+OUTBOX
+JUMP main

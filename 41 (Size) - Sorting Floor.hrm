@@ -1,6 +1,6 @@
 -- 41 - Sorting Floor
 -- Size Challenge: 34/34
--- Speed: 847/714
+-- Speed: 809/714
 -- For each zero terminated string in the INBOX,
 -- SORT the content of the string,
 -- smallest first, biggest last.
