@@ -1,0 +1,60 @@
+-- 40 - Prime Factory
+-- Speed Challenge: 308/399
+-- For each thing in the INBOX,
+-- send its PRIME FACTORS to the OUTBOX,
+-- in order from smallest to largest.
+
+-- 20: input
+-- 21: division result
+-- 22: division counter
+-- 23: current prime factor
+-- 24: 0
+
+main:
+COPYFROM 24
+COPYTO 23
+BUMPUP 23
+BUMPUP 23
+INBOX
+COPYTO 22
+
+testIfDone:
+SUB 23
+JUMPZ outLastNumber
+
+loop:
+SUB 23
+JUMPN nextPrimeNumber
+JUMPZ repeatPrimeNumber
+JUMP loop
+
+nextPrimeNumber:
+BUMPUP 23
+COPYFROM 22
+JUMP testIfDone
+
+repeatPrimeNumber:
+COPYFROM 23
+OUTBOX
+COPYFROM 24
+COPYTO 21
+BUMPUP 21
+COPYFROM 22
+
+division:
+SUB 23
+JUMPZ divisionDone
+COPYTO 22
+BUMPUP 21
+COPYFROM 22
+JUMP division
+
+divisionDone:
+COPYFROM 21
+COPYTO 22
+JUMP testIfDone
+
+outLastNumber:
+COPYFROM 23
+OUTBOX
+JUMP main
