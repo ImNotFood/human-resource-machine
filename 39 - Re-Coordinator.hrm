@@ -1,6 +1,6 @@
 -- 39 - Re-Coordinator
--- Size: 14/15
--- Speed: 82/76
+-- Size: 14/14
+-- Speed: 76/76
 -- Each number in the INBOX is an address of a tile on the floor.  
 -- Send the coordinates of that tile to the OUTBOX.  
 -- Example: 6 has the coordinates "2, 1".
@@ -11,29 +11,27 @@
 -- 2 [ 8,  9, 10, 11]
 -- 3 [12, 13, 14, 15]
 
---  0: input
---  1: counter
---  4: input (saved)
+-- 12: columns
+-- 13: input+rows
 -- 14: 0
 -- 15: 4
 
 main:
-INBOX
-COPYTO 0
 COPYFROM 14
-COPYTO 1
+COPYTO 12
+INBOX
 
 loop:
-COPYFROM 0
 SUB 15
 JUMPN out
-COPYTO 0
-BUMPUP 1
+COPYTO 13
+BUMPUP 12
+COPYFROM 13
 JUMP loop
 
 out:
-COPYFROM 0
+ADD 15
 OUTBOX
-COPYFROM 1
+COPYFROM 12
 OUTBOX
 JUMP main
