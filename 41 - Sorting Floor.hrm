@@ -1,0 +1,58 @@
+-- 41 - Sorting Floor
+-- Size: 37/34
+-- Speed: 919/714
+-- For each zero terminated string in the INBOX,
+-- SORT the content of the string,
+-- smallest first, biggest last.
+-- Put the result in the OUTBOX.
+
+main:
+COPYFROM 24
+COPYTO 21
+
+nextInput:
+COPYFROM 24
+COPYTO 20
+INBOX 
+JUMPZ out
+COPYTO 10
+
+testLetter:
+COPYFROM 20
+SUB 21
+JUMPZ heldLetterIsAtTheEnd
+COPYFROM 10
+SUB [20]
+JUMPN heldLetterIsSmaller
+BUMPUP 20
+JUMP testLetter
+
+heldLetterIsSmaller:
+COPYFROM [20]
+COPYTO 11
+COPYFROM 10
+COPYTO [20]
+COPYFROM 11
+COPYTO 10
+BUMPUP 20
+SUB 21
+JUMPZ heldLetterIsAtTheEnd
+JUMP heldLetterIsSmaller
+
+heldLetterIsAtTheEnd:
+COPYFROM 10
+COPYTO [20]
+BUMPUP 21
+JUMP nextInput
+
+out:
+COPYFROM 24
+COPYTO 20
+
+outLoop:
+COPYFROM [20]
+OUTBOX 
+BUMPUP 20
+SUB 21
+JUMPZ main
+JUMP outLoop
